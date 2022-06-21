@@ -1,6 +1,7 @@
 tqdm==4.64.0
 pandas==1.4.2
 matplotlib==3.5.2
+seaborn==0.11.2
 https://download.pytorch.org/whl/cu113/torch-1.11.0%2Bcu113-cp39-cp39-linux_x86_64.whl
 transformers==4.20.0
 datasets==2.3.2
