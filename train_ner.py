@@ -28,16 +28,20 @@ import random
 # %% Config
 
 class Config:
-    
+    # model_path = 'models/roberta-base_1656662418.0944197/checkpoint-9400'
+    # load_fine_tunned = False
+
     model_name = 'distilbert-base-uncased'
     out_dir = f"./models/{model_name}_{time.time()}"
     data_path = Path("data/ontonotes")
-    train_data_limit = None
-    test_data_limit = None
+    train_data_limit = 5000
+    test_data_limit = 1000
     batch_size = 16
     random_seed = 1
     logging_steps_per_epochs = 10
-
+    do_train = True
+    do_eval = True
+    
     training_args = dict(
         output_dir = out_dir,
         per_device_train_batch_size = batch_size,
@@ -52,6 +56,9 @@ class Config:
         weight_decay=0.01,
     )
 
+
+# if Config.load_fine_tunned:
+#     Config.model_name = Config.model_path    
 
 os.mkdir(Config.out_dir)
 
@@ -224,10 +231,13 @@ def compute_metrics(p):
 #     _logger.info("Deleting previous model.")
 #     del model
 
+label_str2int = features['ner_tags'].feature._str2int
+label_int2str = {v:k for k,v in label_str2int.items()}
+
 model = AutoModelForTokenClassification.from_pretrained(Config.model_name, **{
     "num_labels" : len(label_list),
-    "id2label" : features['ner_tags'].feature._int2str,
-    "label2id" : features['ner_tags'].feature._str2int
+    "id2label" : label_int2str,
+    "label2id" : label_str2int
 })
 
 _logger.info(f"{model}")
@@ -251,12 +261,14 @@ trainer = Trainer(
     compute_metrics=compute_metrics
 )
 
-_logger.info("[[ MODEL TRAINING ]]")
-train_result = trainer.train()
+if Config.do_train:
+    _logger.info("[[ MODEL TRAINING ]]")
+    train_result = trainer.train()
 
 # %%
-_logger.info("[[ MODEL EVALUATION ]]")
-trainer.evaluate()
+if Config.do_eval:
+    _logger.info("[[ MODEL EVALUATION ]]")
+    trainer.evaluate()
 # %%
 
 for _h in trainer.state.log_history:
