@@ -34,8 +34,8 @@ class Config:
     model_name = 'distilbert-base-uncased'
     out_dir = f"./models/{model_name}_{time.time()}"
     data_path = Path("data/ontonotes")
-    train_data_limit = 5000
-    test_data_limit = 1000
+    train_data_limit = None
+    test_data_limit = None
     batch_size = 16
     random_seed = 1
     logging_steps_per_epochs = 10
