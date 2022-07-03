@@ -7,3 +7,4 @@ datasets==2.3.2
 plotly==5.9.0
 wordcloud==1.8.2.2
 seqeval==1.2.2
+kaleido==0.2.1
