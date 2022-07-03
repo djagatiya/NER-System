@@ -28,10 +28,8 @@ import random
 # %% Config
 
 class Config:
-    # model_path = 'models/roberta-base_1656662418.0944197/checkpoint-9400'
-    # load_fine_tunned = False
 
-    model_name = 'distilbert-base-uncased'
+    model_name = 'bert-base-cased'
     out_dir = f"./models/{model_name}_{time.time()}"
     data_path = Path("data/ontonotes")
     train_data_limit = None
@@ -56,9 +54,11 @@ class Config:
         weight_decay=0.01,
     )
 
+# DO EVAL ONLY
+# Config.model_name = 'models/bert-base-cased_1656837168.84538/checkpoint-14100'
+# Config.do_train = False
+# Config.do_eval = True
 
-# if Config.load_fine_tunned:
-#     Config.model_name = Config.model_path    
 
 os.mkdir(Config.out_dir)
 
