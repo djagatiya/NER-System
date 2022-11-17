@@ -1,6 +1,6 @@
 # NER-System
 
-A PyTorch-based NER-System repository for exploring various NER datasets, training deep learning models, and sharing them with the community.
+A PyTorch-based NER-System repository for exploring various NER datasets, training deep learning models, and sharing with the community.
 
 ### Libraries:
 - Python-3.9
